@@ -1,5 +1,4 @@
-**/.pbi/localSettings.json
-**/.pbi/cache.abf
-**/.pbi/unappliedChanges.json
-*.tmp
+em branco.pbix
+powerbi-*.png
 ~$*.xlsx
+*.tmp
