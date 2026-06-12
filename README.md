@@ -1,5 +1,7 @@
 # Dashboard de Produção - Power BI
 
+<img width="1360" height="731" alt="Image" src="https://github.com/user-attachments/assets/e08d3476-05ed-4a49-b988-f44deef22217" />
+
 Este projeto foi criado para acompanhar a produção de uma equipe no Power BI, usando uma base em Excel com ordens de produção, operadores, produtos, ocorrências, horas trabalhadas, quantidade aprovada e quantidade rejeitada.
 
 A principal ideia do dashboard é permitir uma leitura rápida da produção individual de cada funcionário e também analisar o desempenho em cada mês. Assim fica mais fácil entender quem produziu mais, onde ocorreram paradas, quais produtos tiveram rejeição e como a produção evoluiu ao longo do tempo.
