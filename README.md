@@ -4,7 +4,8 @@ Projeto de dashboard de producao criado a partir da base `Produção.xlsx`, segu
 
 ## Entregaveis
 
-- `powerbi/Dashboard_Producao.pbip`: projeto Power BI preparado para abrir no Power BI Desktop.
+- `Dashboard_Producao.pbip`: projeto Power BI preparado para abrir no Power BI Desktop, com as pastas do report e do modelo ao lado do arquivo.
+- `powerbi/Dashboard_Producao.pbip`: copia tecnica do mesmo projeto mantida dentro da pasta `powerbi`.
 - `powerbi/tema-dashboard-producao.json`: tema visual escuro com cores do layout.
 - `powerbi/medidas-dashboard-producao.dax`: medidas DAX usadas nos KPIs, grafico e gauges.
 - `powerbi/MONTAGEM_DASHBOARD_POWER_BI.md`: guia de montagem do report no Power BI.
@@ -22,4 +23,4 @@ Projeto de dashboard de producao criado a partir da base `Produção.xlsx`, segu
 
 ## Como usar
 
-Abra `powerbi/Dashboard_Producao.pbip` no Power BI Desktop. Se o Power BI solicitar o caminho da base, selecione o arquivo `Produção.xlsx` que esta na raiz do projeto. Depois importe o tema `powerbi/tema-dashboard-producao.json` e use o guia `powerbi/MONTAGEM_DASHBOARD_POWER_BI.md` para conferir o posicionamento dos visuais.
+Abra `Dashboard_Producao.pbip` no Power BI Desktop, pela raiz deste projeto. Ele precisa ficar ao lado das pastas `Dashboard_Producao.Report` e `Dashboard_Producao.SemanticModel`; se voce abrir uma copia solta na area de trabalho, o Power BI vai mostrar erro de artefato ausente. Se o Power BI solicitar o caminho da base, selecione o arquivo `Produção.xlsx` que esta na raiz do projeto. Depois importe o tema `powerbi/tema-dashboard-producao.json` e use o guia `powerbi/MONTAGEM_DASHBOARD_POWER_BI.md` para conferir o posicionamento dos visuais.

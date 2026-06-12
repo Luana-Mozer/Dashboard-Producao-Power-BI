@@ -1,0 +1,86 @@
+{
+  "compatibilityLevel": 1567,
+  "model": {
+    "culture": "pt-BR",
+    "dataAccessOptions": {
+      "legacyRedirects": true,
+      "returnErrorValuesAsNull": true
+    },
+    "defaultPowerBIDataSourceVersion": "powerBI_V3",
+    "sourceQueryCulture": "pt-BR",
+    "tables": [
+      {
+        "name": "BaseProducao",
+        "columns": [
+          { "name": "Numero Ordem", "dataType": "int64", "sourceColumn": "Numero Ordem", "summarizeBy": "none" },
+          { "name": "Operador", "dataType": "string", "sourceColumn": "Operador", "summarizeBy": "none" },
+          { "name": "Produto", "dataType": "string", "sourceColumn": "Produto", "summarizeBy": "none" },
+          { "name": "Ocorrencia", "dataType": "string", "sourceColumn": "Ocorrência", "summarizeBy": "none" },
+          { "name": "Data Inicio", "dataType": "dateTime", "sourceColumn": "Data Inicio", "summarizeBy": "none" },
+          { "name": "Hora Inicio", "dataType": "string", "sourceColumn": "Hora Inicio", "summarizeBy": "none" },
+          { "name": "Data Fim", "dataType": "dateTime", "sourceColumn": "Data Fim", "summarizeBy": "none" },
+          { "name": "Hora Fim", "dataType": "string", "sourceColumn": "Hora Fim", "summarizeBy": "none" },
+          { "name": "Total Horas", "dataType": "double", "sourceColumn": "Total Horas", "summarizeBy": "sum", "formatString": "#,0.00" },
+          { "name": "Qtd Aprovada", "dataType": "int64", "sourceColumn": "Qtd Aprovada", "summarizeBy": "sum", "formatString": "#,0" },
+          { "name": "Qtd Rejeitada", "dataType": "int64", "sourceColumn": "Qtd Rejeitada", "summarizeBy": "sum", "formatString": "#,0" },
+          {
+            "name": "Mes Numero",
+            "dataType": "int64",
+            "type": "calculated",
+            "expression": "MONTH ( BaseProducao[Data Inicio] )",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Mes",
+            "dataType": "string",
+            "type": "calculated",
+            "expression": "FORMAT ( BaseProducao[Data Inicio], \"mmmm\" )",
+            "summarizeBy": "none",
+            "sortByColumn": "Mes Numero"
+          },
+          {
+            "name": "Tipo Hora",
+            "dataType": "string",
+            "type": "calculated",
+            "expression": "IF ( LEN ( TRIM ( BaseProducao[Ocorrencia] ) ) > 0, \"Parada\", \"Produtiva\" )",
+            "summarizeBy": "none"
+          }
+        ],
+        "measures": [
+          { "name": "Total Aprovado", "expression": "SUM ( BaseProducao[Qtd Aprovada] )", "formatString": "#,0" },
+          { "name": "Total Rejeitado", "expression": "SUM ( BaseProducao[Qtd Rejeitada] )", "formatString": "#,0" },
+          { "name": "Horas Totais", "expression": "SUM ( BaseProducao[Total Horas] )", "formatString": "#,0.00" },
+          { "name": "Horas Produtivas", "expression": "CALCULATE ( [Horas Totais], BaseProducao[Tipo Hora] = \"Produtiva\" )", "formatString": "#,0" },
+          { "name": "Horas Paradas", "expression": "CALCULATE ( [Horas Totais], BaseProducao[Tipo Hora] = \"Parada\" )", "formatString": "#,0" },
+          { "name": "Disponibilidade", "expression": "DIVIDE ( [Horas Produtivas], [Horas Totais] )", "formatString": "0.00%" },
+          { "name": "Qualidade", "expression": "DIVIDE ( [Total Aprovado], [Total Aprovado] + [Total Rejeitado] )", "formatString": "0.00%" },
+          { "name": "Aprovado Mil", "expression": "DIVIDE ( [Total Aprovado], 1000 )", "formatString": "#,0" }
+        ],
+        "partitions": [
+          {
+            "name": "BaseProducao",
+            "mode": "import",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Fonte = Excel.Workbook(File.Contents(\"Produção.xlsx\"), null, true),",
+                "    Base = Fonte{[Item=\"BaseProdução\",Kind=\"Sheet\"]}[Data],",
+                "    Cabecalhos = Table.PromoteHeaders(Base, [PromoteAllScalars=true]),",
+                "    Tipos = Table.TransformColumnTypes(Cabecalhos, {{\"Numero Ordem\", Int64.Type}, {\"Operador\", type text}, {\"Produto\", type text}, {\"Ocorrência\", type text}, {\"Data Inicio\", type datetime}, {\"Hora Inicio\", type text}, {\"Data Fim\", type datetime}, {\"Hora Fim\", type text}, {\"Total Horas\", type number}, {\"Qtd Aprovada\", Int64.Type}, {\"Qtd Rejeitada\", Int64.Type}}, \"pt-BR\")",
+                "in",
+                "    Tipos"
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "annotations": [
+      {
+        "name": "PBI_QueryOrder",
+        "value": "[\"BaseProducao\"]"
+      }
+    ]
+  }
+}
